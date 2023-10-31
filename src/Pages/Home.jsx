@@ -2,19 +2,26 @@ import React from 'react'
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import useFetch from '../Hooks/useFetch';
 
 function Home() {
+  const data = useFetch("https://dummyjson.com/products")
+//console.log(data);
+
   return (
     <div style={{marginTop:'100px'}}>
       <Row className='ms-5 '>
-        <Col className='mb-5' sm={12} md={6} lg={4} xl={3}>
-        <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="holder.js/100px180" />
+
+       {
+       data?.length>0?data?.map((product,index)=>(
+      <Col key={index} className='mb-5' sm={12} md={6} lg={4} xl={3}>
+        <Card className='shadow rounded' style={{ width: '18rem', height:'30rem' }}>
+      <Card.Img height={'200px'} variant="top" src={product?.thumbnail} />
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
+        <Card.Title>{product?.title}</Card.Title>
         <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
+          <p>{product?.description.slice(0,55)}...</p>
+          <h5 className='fw-border'>${product?.price}</h5>
         </Card.Text>
         <div className='d-flex justify-content-between'>
           <Button className='btn btn-light'><i className="fa-solid fa-heart text-danger fa-2x"></i></Button>
@@ -23,14 +30,13 @@ function Home() {
       </Card.Body>
     </Card>
         </Col>
+       )): <p className='text-danger fw-bolder fs-4'>Nothing to Display!!!!</p>
+       
+        }
 
-
-        
-
-        
       </Row>
     </div>
   )
 }
 
-export default Home
+export default Home;
