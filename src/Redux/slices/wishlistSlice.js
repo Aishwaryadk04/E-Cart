@@ -12,6 +12,7 @@ const wishlistSlice = createSlice({
             return state.filter(item=>item.id!=action.payload)
 
         }
+       
     }
 })
 
